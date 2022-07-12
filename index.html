@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div data-onclick="me" data-group="ss">me1</div>
+    <div data-onclick="me" data-group="ss">me2</div>
+    <div class="me">asdf</div>
+    <div class="me2">bbbbb</div>
+    <script>
+        //* On Click System (grouped and single)
+        let clicker = document.querySelectorAll("[data-onClick]");
+        clicker.forEach(i => {
+            if (i.getAttribute('data-group')) {
+                i.addEventListener("click", function () {
+                    document.querySelectorAll(`[data-group=${i.getAttribute('data-group')}`).forEach(item => {
+                        item.classList.remove(i.getAttribute("data-onClick"));
+                    })
+                    i.classList.toggle(i.getAttribute("data-onClick"));
+                });
+            } else {
+                i.addEventListener("click", function () {
+                    i.classList.toggle(i.getAttribute("data-onClick"));
+                });
+            }
+        })
+
+
+        //* Target system (grouped and single)
+        let targeter = document.querySelectorAll('[data-target]');
+        targeter.forEach(i => {
+            let target = document.querySelector(i.dataset.target);
+            if (target.dataset.group) {
+                i.addEventListener('click', function () {
+                    document.querySelectorAll(`[data-group=${target.dataset.group}]`).forEach(item => {
+                        item.classList.remove('active');
+                    })
+                    target.classList.add('active');
+                })
+            } else {
+                i.addEventListener('click', function () {
+                    target.classList.toggle('active');
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>
